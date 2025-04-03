@@ -1,0 +1,59 @@
+/* FlowerList.css */
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .mobile-container {
+    padding: 1rem;
+    overflow-x: hidden;
+  }
+
+  .mobile-flower-list {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .mobile-flower-item {
+    transition: background-color 0.2s;
+  }
+
+  .mobile-flower-item:hover {
+    background-color: rgba(252, 176, 64, 0.1);
+  }
+
+  /* Override the default desktop layout */
+  .min-h-screen.bg-\[\#1e5738\].flex {
+    flex-direction: column !important;
+  }
+
+  /* Make sure both form and list take full width on mobile */
+  .min-h-screen.bg-\[\#1e5738\].flex > div {
+    width: 100% !important;
+  }
+}
+
+/* Shared styles for both mobile and desktop */
+.min-h-screen.bg-\[\#1e5738\] {
+  background-color: #1e5738;
+}
+
+/* Desktop layout */
+@media (min-width: 769px) {
+  /* Keep the original layout for desktop */
+  .min-h-screen.bg-\[\#1e5738\].flex {
+    flex-direction: row;
+  }
+
+  .min-h-screen.bg-\[\#1e5738\].flex > div:first-child {
+    width: 33.333% !important;
+    margin: 2rem !important;
+    height: auto !important; /* Remove the height constraint */
+  }
+
+  .min-h-screen.bg-\[\#1e5738\].flex > div:last-child {
+    width: calc(
+      66.667% - 4rem
+    ) !important; /* Adjust width to account for margins */
+    margin: 2rem !important;
+  }
+}
