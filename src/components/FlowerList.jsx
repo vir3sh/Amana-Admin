@@ -274,13 +274,7 @@ const FlowerList = () => {
                     <div>
                       <h3 className="font-medium text-base">{flower.name}</h3>
                       <img
-                        src={
-                          flower.image
-                            ? `${import.meta.env.VITE_BACKEND_URL}${
-                                flower.image
-                              }`
-                            : amanaDefault
-                        }
+                        src={flower.image ? flower.image : amanaDefault}
                         alt={flower.name}
                         className="w-16 h-16 object-cover rounded-md mr-3"
                       />
