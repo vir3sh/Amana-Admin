@@ -11,6 +11,7 @@ import FlowerList from "./components/FlowerList";
 import { isAuthenticated } from "./utils/auth";
 import React from "react";
 import Navbar from "./components/Navbar";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const [auth, setAuth] = useState(isAuthenticated());
@@ -37,6 +38,7 @@ const App = () => {
           element={auth ? <FlowerList /> : <Navigate to="/" />}
         />
       </Routes>
+      <ToastContainer position="top-right" autoClose={3000} />
     </Router>
   );
 };
