@@ -95,6 +95,7 @@ const FlowerList = () => {
       setName("");
       setAvailable(false);
       setImage(null);
+      setImagePreview(null);
     } catch (error) {
       console.log(error);
       alert("Failed to save flower!");
@@ -294,6 +295,8 @@ const FlowerList = () => {
                           setEditingFlower(flower);
                           setName(flower.name);
                           setAvailable(flower.available);
+                          setImagePreview(flower.image); // for display
+
                           // Scroll to top to edit
                           window.scrollTo({ top: 0, behavior: "smooth" });
                         }}
