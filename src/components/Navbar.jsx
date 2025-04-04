@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/auth";
-import amana from "../assets/amana.png";
+import amana from "../assets/amanaf.png";
 import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = ({ setAuth }) => {
