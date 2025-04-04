@@ -35,6 +35,7 @@ const FlowerList = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchFlowers = async () => {
@@ -54,6 +55,9 @@ const FlowerList = () => {
 
   const handleSaveFlower = async () => {
     if (!name) return alert("Flower name cannot be empty!");
+
+    setLoading(true); // start loading
+
     try {
       const formData = new FormData();
       formData.append("name", name);
@@ -67,8 +71,10 @@ const FlowerList = () => {
         },
       };
 
+      let res;
+
       if (editingFlower) {
-        const res = await axios.patch(
+        res = await axios.patch(
           `${import.meta.env.VITE_BACKEND_URL}/api/flowers/${
             editingFlower._id
           }`,
@@ -82,15 +88,16 @@ const FlowerList = () => {
           )
         );
       } else {
-        const res = await axios.post(
+        res = await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/api/flowers`,
           formData,
           config
         );
-        toast.success("Flowers added successfully");
+        toast.success("Flower added successfully!");
         setFlowers([...flowers, res.data]);
       }
 
+      // Reset form
       setEditingFlower(null);
       setName("");
       setAvailable(false);
@@ -99,6 +106,8 @@ const FlowerList = () => {
     } catch (error) {
       console.log(error);
       alert("Failed to save flower!");
+    } finally {
+      setLoading(false); // stop loading
     }
   };
 
@@ -219,12 +228,44 @@ const FlowerList = () => {
                 />
               </button>
             </div>
-            <Button
-              className="w-full text-base py-2 bg-[#fcb040] text-white"
+            <button
               onClick={handleSaveFlower}
+              disabled={loading}
+              className={`bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              {editingFlower ? "Update Flower" : "Add Flower"}
-            </Button>
+              {loading
+                ? "Saving..."
+                : editingFlower
+                ? "Update Flower"
+                : "Add Flower"}
+            </button>
+
+            {loading && (
+              <div className="flex items-center space-x-2">
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8z"
+                  />
+                </svg>
+                <span>Saving...</span>
+              </div>
+            )}
+
             {editingFlower && (
               <Button
                 className="w-full text-base py-2 bg-gray-500 text-white mt-2"
